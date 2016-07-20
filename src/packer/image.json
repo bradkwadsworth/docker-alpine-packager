@@ -1,0 +1,34 @@
+{
+  "builders":[
+    {
+      "type": "docker",
+      "name": "alpine-packager",
+      "image": "alpine",
+      "commit": true,
+      "run_command": [
+        "-d",
+        "-i",
+        "-t",
+        "{{.Image}}",
+        "/bin/sh"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "srcipts/ansible.sh"
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "ansible/local.yml"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "docker-tag",
+      "repository": "dm/alpine-packager",
+      "tag": "latest"
+    }
+  ]
+}
