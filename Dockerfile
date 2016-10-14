@@ -2,9 +2,8 @@ FROM alpine:latest
 
 MAINTAINER Brad Wadsworth
 
-RUN apk update && \
-  apk upgrade && \
-  apk add alpine-sdk && \
+RUN apk --no-cache upgrade && \
+  apk --no-cache add alpine-sdk && \
   adduser -D packager && \
   addgroup packager abuild && \
   echo 'packager ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/packager && \
